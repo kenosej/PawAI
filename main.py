@@ -7,8 +7,6 @@ import torch
 import torchvision.models as models
 from PIL import Image
 import torchvision.transforms as transforms
-
-
 os.getcwd()
 
 
@@ -43,12 +41,12 @@ plt.axhline(avg_no_images, color='black')
 plt.xlabel('Dog breed folder')
 plt.ylabel('Number of images in folder')
 plt.title("Number of images per class- Black line corresponds to average number of images per dog breed")
-#plt.show()
-
-#######
 
 
-#%matplotlib inline                               
+
+########################################################################################################################
+
+
 
 # extract pre-trained face detector
 face_cascade = cv2.CascadeClassifier('haarcascades/haarcascade_frontalface_alt.xml')
@@ -67,8 +65,6 @@ gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 #plt.show()
 # find faces in image
 faces = face_cascade.detectMultiScale(gray) #gives bounding box coordinates
-
-# print number of faces detected in the image
 print('Number of faces detected in test picture No#1:', len(faces))
 
 # get bounding box for each detected face
@@ -106,8 +102,6 @@ gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 plt.show()
 # find faces in image
 faces = face_cascade.detectMultiScale(gray)  # gives bounding box coordinates
-
-# print number of faces detected in the image
 print('Number of faces detected in test picture No#2:', len(faces))
 
 # get bounding box for each detected face
@@ -127,6 +121,9 @@ plt.show()
 print(face_detector("./data/test_three_persons.jpg"))
 
 
+# HUMAN AND DOG DETECTION
+########################################################################################################################
+
 
 human_files_short = human_files[:100]
 dog_files_short = dog_files[:100]
@@ -145,7 +142,8 @@ dog_files_short = dog_files[:100]
 #print('Percentage of images in human_files that have detected human face:', (sum(human_faces_in_humanData)/len(human_faces_in_humanData))*100)
 #print('Percentage of images in dog_files that have detected human face(incorrect detection):', (sum(human_faces_in_dogData)/len(human_faces_in_dogData))*100)
 
-#######
+
+#######################################################################################################################
 
 
 
@@ -199,7 +197,7 @@ def VGG16_predict(img_path):
 # following return statement can also be used 
     return torch.max(output,1)[1].item()
 
-#print(VGG16_predict("data/klosar.jpg"))
+#print(VGG16_predict("data/test_one_person.jpg"))
 
 
 #checking prediction on a sample image from dogs dataset
@@ -212,6 +210,8 @@ def dog_detector(img_path):
     prediction = VGG16_predict(img_path)
     return (prediction>=151 and prediction<=268)
 
-#print(dog_detector("klosar.jpg"))
+# TEST CASES FOR DOGS AND HUMANS TO DISTINGUISH IF A DOG EXISTS ON THE PICTURE
+print("The test No#1 is a dog on the image?",dog_detector("data/test_one_person.jpg"))
+print("The test No#2 is a dog on the image?",dog_detector("data/dog_images/test/065.Entlebucher_mountain_dog/Entlebucher_mountain_dog_04561.jpg"))
 
 
