@@ -1,8 +1,16 @@
 import os
-os.getcwd()
-
 import numpy as np
 from glob import glob
+import cv2
+import matplotlib.pyplot as plt
+import torch
+import torchvision.models as models
+from PIL import Image
+import torchvision.transforms as transforms
+
+
+os.getcwd()
+
 
 # load filenames for human and dog images
 human_files = np.array(glob("./data/lfw/*/*"))
@@ -28,8 +36,7 @@ name_folder = [x.split('/')[-1] for x in glob("./data/dog_images/train/*")]
 avg_no_images = sum(num_images_per_folder)/len(num_images_per_folder)
 #print(avg_no_images)
 
-import matplotlib.pyplot as plt
-plt.figure(figsize=(10,8)) 
+plt.figure(figsize=(10,8))
 plt.bar(name_folder, num_images_per_folder)
 plt.xticks(rotation='vertical')
 plt.axhline(avg_no_images, color='black')
@@ -40,8 +47,7 @@ plt.title("Number of images per class- Black line corresponds to average number 
 
 #######
 
-import cv2                
-import matplotlib.pyplot as plt                        
+
 #%matplotlib inline                               
 
 # extract pre-trained face detector
@@ -121,7 +127,6 @@ plt.show()
 print(face_detector("./data/test_three_persons.jpg"))
 
 
-from tqdm import tqdm
 
 human_files_short = human_files[:100]
 dog_files_short = dog_files[:100]
@@ -142,8 +147,7 @@ dog_files_short = dog_files[:100]
 
 #######
 
-import torch
-import torchvision.models as models
+
 
 # define VGG16 model
 VGG16 = models.vgg16(pretrained=True)
@@ -156,8 +160,6 @@ if use_cuda:
     VGG16 = VGG16.cuda()
 
 
-from PIL import Image
-import torchvision.transforms as transforms
 
 def load_transform_image(img_path):
     img = Image.open(img_path).convert('RGB')
