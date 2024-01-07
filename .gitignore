@@ -1,3 +1,6 @@
 .idea
 data/dog_images
 data/lfw
+images/*
+model_scratch.pt
+model_transfer.pt
