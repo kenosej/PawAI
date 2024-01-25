@@ -57,6 +57,7 @@ def VGG16_predict(img_path):
     
     if use_cuda:
         image = image.cuda()
+
     output = VGG16(image)
     
     ## Return the *index* of the predicted class for that image
@@ -136,9 +137,13 @@ def train(n_epochs, loaders, model, optimizer, criterion, use_cuda, save_path):
         
         if valid_loss < valid_loss_min:
             torch.save(model.state_dict(), save_path)
-            print('Validation loss decreased ({:.6f} --> {:.6f}).  Saving model...'.format(
-            valid_loss_min,
-            valid_loss))
+
+            print(
+                    'Validation loss decreased ({:.6f} --> {:.6f}).  Saving model...'.format(
+                        valid_loss_min, 
+                        valid_loss)
+            )
+
             valid_loss_min = valid_loss
             
     return model
@@ -152,6 +157,7 @@ def test(loaders, model, criterion, use_cuda):
     preds = []
     targets = []
     model.eval()
+
     for batch_idx, (data, target) in enumerate(loaders['test']):
         # move to GPU
         if use_cuda:
@@ -167,7 +173,7 @@ def test(loaders, model, criterion, use_cuda):
         test_loss = test_loss + ((1 / (batch_idx + 1)) * (loss.data - test_loss))
 
         # convert output probabilities to predicted class
-        pred = output.data.max(1, keepdim=True)[1]
+        pred = output.data.max(1, keepdim = True)[1]
 
         preds.append(pred)
         targets.append(target)
@@ -218,9 +224,9 @@ class Net(nn.Module):
         ## Define layers of a CNN
         
         # Conv Layers
-        self.conv1 = nn.Conv2d(3, 32, 3, stride=2, padding=1)
-        self.conv2 = nn.Conv2d(32, 64, 3, stride=2, padding=1)
-        self.conv3 = nn.Conv2d(64, 128, 3, padding=1)
+        self.conv1 = nn.Conv2d(3, 32, 3, stride = 2, padding = 1)
+        self.conv2 = nn.Conv2d(32, 64, 3, stride = 2, padding = 1)
+        self.conv3 = nn.Conv2d(64, 128, 3, padding = 1)
 
         # maxpool
         self.pool = nn.MaxPool2d(2, 2)
